@@ -1,6 +1,7 @@
 package LeetCode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -8,50 +9,29 @@ import java.util.Queue;
 public class LevelOrderTraversal {
     public static List<List<Integer>> levelOrder(TreeNode root) {
         Queue<TreeNode> q = new LinkedList<TreeNode>();
-        int heightOfTree = height(root);
-        List<List<Integer>> result = new ArrayList<>(heightOfTree);
-        for (int i = 0; i < heightOfTree; ++i) {
-            result.add(new ArrayList<Integer>());
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) {
+            return result;
         }
         q.add(root);
-        result.get(0).add(root.val);
         while (q.isEmpty() == false) {
-            TreeNode node = q.poll();
-            int arrIndex = LevelOrderTraversal.distFromRoot(root, node.val) + 1;
-            
-            if (node.left != null) {
-                result.get(arrIndex).add(node.left.val);
-                q.add(node.left);
+            List<Integer> levelList = new ArrayList<Integer>();
+            int level = q.size();
+            for (int i=0; i<level; ++i) {
+                TreeNode node = q.poll();
+                if (node.left != null) {
+                    //levelList.add(node.left.val);
+                    q.add(node.left);
+                }
+                if (node.right != null) {
+                    //levelList.add(node.right.val);
+                    q.add(node.right);
+                }
+                levelList.add(node.val);
             }
-            if (node.right != null) {
-                result.get(arrIndex).add(node.right.val);
-                q.add(node.right);
-            }
+            result.add(levelList);
         }
         return result;
-    }
-    
-    private static int height(TreeNode root) {
-        
-        if (root == null) {
-            return 0;
-        }
-        int lh = height(root.left);
-        int rh = height(root.right);
-        return (1 + (lh > rh? lh: rh));
-    }
-    
-    private static int distFromRoot(TreeNode root, int val) {
-        
-        if (root == null) {
-            return -1;
-        }
-        int dist = -1;
-        if (root.val == val || (dist = distFromRoot(root.left, val)) >= 0
-                || (dist = distFromRoot(root.right, val)) >= 0) {
-            return dist + 1;
-        }
-        return dist;
     }
     
     public static void main(String[] args) {
