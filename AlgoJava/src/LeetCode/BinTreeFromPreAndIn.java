@@ -5,31 +5,29 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BinTreeFromPreAndIn {
+    public static Map<Integer, Integer> indexMap = new HashMap<Integer, Integer>();
+    public static int preIndex = 0;
     public static TreeNode buildTree(int[] preorder, int[] inorder) {
-        TreeNode result = null;
-        int inIndex = 0;
-        int preIndex = 0;
-        //        if (preorder.length < 1) {
-        //            return null;
-        //        }
-        //        result = new TreeNode(preorder[0]);
-        //        ++preIndex;
-        //        inIndex = findInorder(0, inorder, preorder[0]);
-        return buildTreeUtil(result, preIndex, preorder, inorder);
-        //return result;
+        Integer index = 0;
+        for (Integer val : inorder) {
+            indexMap.put(val, index);
+            index++;
+        }
+        return buildTreeUtil(preorder, inorder, 0, inorder.length);
     }
 
-    public static TreeNode buildTreeUtil(TreeNode result, int preIndex, int[] preorder, int[] inorder) {
-        if (preIndex >= preorder.length) {
+    public static TreeNode buildTreeUtil(int[] preorder, int[] inorder, int left, int right) {
+        if (left == right) {
             return null;
         }
         TreeNode curr = new TreeNode(preorder[preIndex]);
-        int inIndex = findInorder(inorder, preorder[preIndex]);
+        int inIndex = indexMap.get(preorder[preIndex]);
+        System.out.println(inIndex);
         ++preIndex;
-        if (inIndex > 0) {
-            curr.left = buildTreeUtil(curr, preIndex, preorder, Arrays.copyOfRange(inorder, 0, inIndex));
-            curr.right = buildTreeUtil(curr, preIndex, preorder, Arrays.copyOfRange(inorder, inIndex+1, inorder.length));
-        }
+
+        curr.left = buildTreeUtil(preorder, inorder, left, inIndex);
+        curr.right = buildTreeUtil(preorder, inorder, inIndex+1, right);
+
         return curr;
     }
 
@@ -48,7 +46,7 @@ public class BinTreeFromPreAndIn {
             return;
         }
         inorder(root.left);
-        System.out.println(root.val + " ");
+        System.out.print(root.val + " ");
         inorder(root.right);
     }
 
