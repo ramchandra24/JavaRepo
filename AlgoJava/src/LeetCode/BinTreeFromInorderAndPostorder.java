@@ -40,8 +40,8 @@ public class BinTreeFromInorderAndPostorder {
     }
 
     public static void main(String[] args) {
-        int[] postorder = {9,15,7,20,3};
-        int[] inorder = {9,3,15,20,7};
+        int[] postorder = {3,4,2,1};
+        int[] inorder = {1,2,3,4};
         TreeNode root = BinTreeFromInorderAndPostorder.buildTree(postorder, inorder);
         BinTreeFromInorderAndPostorder.inorder(root);
         return;

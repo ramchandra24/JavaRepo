@@ -51,8 +51,8 @@ public class BinTreeFromPreAndIn {
     }
 
     public static void main(String[] args) {
-        int[] preorder = {3,9,20,15,7};
-        int[] inorder = {9,3,15,20,7};
+        int[] preorder = {1};
+        int[] inorder = {1};
         TreeNode root = BinTreeFromPreAndIn.buildTree(preorder, inorder);
         BinTreeFromPreAndIn.inorder(root);
         return;
