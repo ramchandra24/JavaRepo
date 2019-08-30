@@ -31,7 +31,7 @@ public class FirstUniqueChar {
     }
     
     public static void main(String[] args) {
-        String s = new String("loveleetcode");
+        String s = new String("loveleetcodeexample");
         System.out.println(FirstUniqueChar.firstUniqChar(s));
     }
 }
