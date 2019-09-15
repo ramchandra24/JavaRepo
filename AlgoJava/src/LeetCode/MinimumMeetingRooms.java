@@ -12,7 +12,6 @@ public class MinimumMeetingRooms {
         System.out.println();
         endTimes.stream().forEach(a -> System.out.print(a + " "));
         System.out.println();
-        int endIndex = 0;
         int maxcount = 0;
         int mcount = 0;
         for (int i = 0, j = 0; i < intervals.length && j < intervals.length;) {

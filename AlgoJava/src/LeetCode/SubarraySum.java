@@ -13,14 +13,8 @@ public class SubarraySum {
             if (sum == k) {
                 ++count;
             }
-            if (!sub.isEmpty() && (null != sub.get(sum - k))) {
-                count += sub.get(sum - k);
-            }
-            int currSumSubs = 1;
-            if (!sub.isEmpty() && (null != sub.get(sum))) {
-                currSumSubs += sub.get(sum);
-            }
-            sub.put(sum, currSumSubs); 
+            count += sub.get(sum - k) == null ? 0 : sub.get(sum - k);
+            sub.put(sum, sub.get(sum) == null ? 1 : sub.get(sum) + 1); 
         }
         return count;
     }
