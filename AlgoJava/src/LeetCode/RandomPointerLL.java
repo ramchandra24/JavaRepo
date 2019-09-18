@@ -29,7 +29,7 @@ public class RandomPointerLL {
             nhead.next = null;
             if (head.random == head) {
                 nhead.random = nhead;
-            } 
+            }
             if (rmap.containsKey(head)) {
                 Node linknode = rmap.get(head);
                 linknode.random = nhead;
