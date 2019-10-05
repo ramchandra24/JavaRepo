@@ -18,7 +18,8 @@ public class WordBreak {
         for (int i = 1; i <= s.length(); ++i) {
             String curr = s.substring(0, i);
             System.out.println(curr);
-            if (dictionary.contains(curr) && wordBreakUtil(s.substring(i, s.length()), dictionary)) {
+            if (dictionary.contains(curr) && 
+                    wordBreakUtil(s.substring(i, s.length()), dictionary)) {
                 return true;
             }
         }
