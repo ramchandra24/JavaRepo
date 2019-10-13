@@ -17,11 +17,11 @@ public class NumberScores {
         int[] digits = digitArr(number);
 
         int sum = 0;
-        sum += digits.length % 5 == 0 ? 6 : 0;
+        sum += number % 7 == 0 ? 1 : 0;
 
-        sum += Arrays.stream(digits).filter(num -> num % 2 != 0).count();
+        sum += (Arrays.stream(digits).filter(num -> num % 2 == 0).count()) * 2;
 
-        sum += (Arrays.stream(digits).filter(num -> num == 5).count()) * 2;
+        sum += (Arrays.stream(digits).filter(num -> num == 9).count()) * 4;
 
         int streak = 1;
         for (int i = 1; i < digits.length; ++i) {
@@ -32,19 +32,19 @@ public class NumberScores {
                 streak = 1;
             }
         }
-        if (streak > 1) {
+        //if (streak > 1) {
             sum += streak * streak;
-        }
+        //}
 
         for (int i = 1; i < digits.length; ++i) {
-            if (digits[i] == 3 && digits[i - 1] == 3) {
-                sum += 4;
+            if (digits[i] == 1 && digits[i - 1] == 1) {
+                sum += 5;
             }
         }
         return sum;
     }
 
     public static void main(String[] args) {
-        System.out.println(compute_number_score(101275345));
+        System.out.println(compute_number_score(11111));
     }
 }
