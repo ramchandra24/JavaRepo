@@ -1,30 +1,16 @@
 package LeetCode;
 
 public class CircularQueue {
+    int head;
+    int rear;
+    int[] elem;
     int capacity;
-    int size;
-    Node head;
-    Node rear;
-
-    class Node {
-        int value;
-        Node next;
-        Node prev;
-
-        Node(int value) {
-            this.value = value;
-            this.next = this.prev = null;
-        }
-    }
 
     /** Initialize your data structure here. Set the size of the queue to be k. */
     public CircularQueue(int k) {
-        size = 0;
+        elem = new int[k];
+        head = rear = -1;
         capacity = k;
-    }
-
-    Node newNode(int value) {
-        return new Node(value);
     }
 
     /**
@@ -36,14 +22,22 @@ public class CircularQueue {
             return false;
         }
         if (isEmpty()) {
-            head = rear = newNode(value);
+            ++head;
+            ++rear;
+            elem[head] = value;
         } else {
-            rear.next = newNode(value);
-            rear.next.prev = rear;
-            rear = rear.next;
+            incRear();
+            elem[rear] = value;
         }
-        ++size;
         return true;
+    }
+
+    private void incRear() {
+        rear = ((rear + 1) % capacity);
+    }
+
+    private void incHead() {
+        head = ((head + 1) % capacity);
     }
 
     /**
@@ -54,16 +48,12 @@ public class CircularQueue {
         if (isEmpty()) {
             return false;
         }
-        if (head.next != null) {
-            head.next.prev = null;
-        }
+        // 1 element remaining in the list
         if (head == rear) {
-            head.next = null;
-            rear.next = null;
+            head = rear = -1;
         } else {
-            head = head.next;
+            incHead();
         }
-        --size;
         return true;
     }
 
@@ -72,7 +62,7 @@ public class CircularQueue {
         if (isEmpty()) {
             return -1;
         }
-        return head.value;
+        return elem[head];
     }
 
     /** Get the last item from the queue. */
@@ -80,17 +70,17 @@ public class CircularQueue {
         if (isEmpty()) {
             return -1;
         }
-        return rear.value;
+        return elem[rear];
     }
 
     /** Checks whether the circular queue is empty or not. */
     public boolean isEmpty() {
-        return size == 0;
+        return (head == -1);
     }
 
     /** Checks whether the circular queue is full or not. */
     public boolean isFull() {
-        return size == capacity;
+        return ((rear + 1) % capacity == head);
     }
 
     /**
