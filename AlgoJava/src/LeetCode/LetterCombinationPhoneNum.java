@@ -16,15 +16,12 @@ public class LetterCombinationPhoneNum {
     private void letterCombUtil(String digits, String build, int start, String[] letters, List<String> results) {
         if (start >= digits.length()) {
             results.add(build);
-            //System.out.println(results);
             return;
         }
-        // for (int i = start; i < digits.length(); ++i) {
+
         String currLetters = letters[digits.charAt(start) - '0' - 2];
         for (int j = 0; j < currLetters.length(); ++j) {
-            // letterCombUtil(digits, build, i+1, letters, results);
             letterCombUtil(digits, build + currLetters.charAt(j), start + 1, letters, results);
-            // }
         }
     }
 
