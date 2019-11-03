@@ -13,46 +13,29 @@ public class MergeKSortedLists {
         }
     }
 
-    public class PQNode {
-        ListNode node;
-        int listNum;
-
-        PQNode(ListNode node, int listNum) {
-            this.node = node;
-            this.listNum = listNum;
-        }
-    }
-
-    public class PQNodeComparator implements Comparator<PQNode> {
-        public int compare(PQNode a, PQNode b) {
-            return a.node.val - b.node.val;
-        }
-    }
-
     public ListNode mergeKLists(ListNode[] lists) {
 
-        ListNode head = null, chead = null;
-        PriorityQueue<PQNode> pq = new PriorityQueue(new PQNodeComparator());
+        ListNode head = new ListNode(0);
+        ListNode chead = head;
+        PriorityQueue<ListNode> pq = new PriorityQueue(new Comparator<ListNode>() {
+            @Override
+            public int compare(ListNode a, ListNode b) {
+                return a.val - b.val;
+            }
+        });
         for (int i = 0; i < lists.length; ++i) {
             if (lists[i] != null) {
-                pq.offer(new PQNode(lists[i], i));
+                pq.offer(lists[i]);
                 lists[i] = lists[i].next;
             }
         }
         while (!pq.isEmpty()) {
-            PQNode curr = pq.poll();
-            int listNum = curr.listNum;
-            if (head == null) {
-                head = chead = curr.node;
-            } else {
-                chead.next = curr.node;
-                chead = chead.next;
-            }
-            if (lists[listNum] != null) {
-                pq.offer(new PQNode(lists[listNum], listNum));
-                lists[listNum] = lists[listNum].next;
+            chead.next = pq.poll();
+            chead = chead.next;
+            if (chead.next != null) {
+                pq.offer(chead.next);
             }
         }
-        return head;
+        return head.next;
     }
 }
