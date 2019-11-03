@@ -4,9 +4,7 @@ public class ReverseWordsInString2 {
     public String reverseWords(String s) {
         String result = "";
         String inter = "";
-        if (s.length() < 1) {
-            return s;
-        }
+
         for (int i = 0; i < s.length(); ++i) {
             char ch = s.charAt(i);
             if (ch == ' ') {
