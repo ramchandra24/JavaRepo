@@ -7,16 +7,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.PriorityQueue;
 
-class CharCounter {
-    char ch;
-    int count;
-
-    CharCounter(char ch, int count) {
-        this.ch = ch;
-        this.count = count;
-    }
-}
-
 public class SortCharsByFreq {
 
     public String frequencySort(String s) {
