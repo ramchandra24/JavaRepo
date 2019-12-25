@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.PriorityQueue;
 
 class CharCounter {
@@ -28,22 +29,17 @@ public class SortCharsByFreq {
             Integer current = freqMap.getOrDefault(ch, 0);
             freqMap.put(ch, current + 1);
         }
-
-        PriorityQueue<CharCounter> pq = new PriorityQueue<>(freqMap.size(), (a, b) -> b.count - a.count);
-
-        for (Character ch : freqMap.keySet()) {
-            pq.add(new CharCounter(ch, freqMap.get(ch)));
-        }
-        String result = "";
-
+        PriorityQueue<Map.Entry<Character, Integer>> pq = new PriorityQueue<>((a, b) -> b.getValue() - a.getValue());
+        pq.addAll(freqMap.entrySet());
+        
+        StringBuilder sb = new StringBuilder();
         while (!pq.isEmpty()) {
-            CharCounter curr = pq.poll();
-            while (curr.count > 0) {
-                result += curr.ch;
-                curr.count--;
+            Map.Entry<Character, Integer> curr = pq.poll();
+            for (int i = 0; i < (int)curr.getValue(); ++i) {
+                sb.append(curr.getKey());
             }
         }
-        return result;
+        return sb.toString();
     }
 
     public static void main(String[] args) {
