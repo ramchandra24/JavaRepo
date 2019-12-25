@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 
 class CharCounter {
     char ch;
@@ -18,26 +19,28 @@ class CharCounter {
 public class SortCharsByFreq {
 
     public String frequencySort(String s) {
+        if (s.length() < 1) {
+            return s;
+        }
         Map<Character, Integer> freqMap = new HashMap<>();
         for (int i = 0; i < s.length(); ++i) {
             Character ch = s.charAt(i);
-            if (!freqMap.containsKey(ch)) {
-                freqMap.put(ch, 0);
-            }
-            Integer current = freqMap.get(ch);
+            Integer current = freqMap.getOrDefault(ch, 0);
             freqMap.put(ch, current + 1);
         }
-        List<CharCounter> count = new ArrayList<>();
+
+        PriorityQueue<CharCounter> pq = new PriorityQueue<>(freqMap.size(), (a, b) -> b.count - a.count);
+
         for (Character ch : freqMap.keySet()) {
-            count.add(new CharCounter(ch, freqMap.get(ch)));
+            pq.add(new CharCounter(ch, freqMap.get(ch)));
         }
-        count.sort((a, b) -> b.count - a.count);
         String result = "";
-        for (int i = 0; i < count.size(); ++i) {
-            int charCount = count.get(i).count;
-            while (charCount > 0) {
-                result += count.get(i).ch;
-                charCount--;
+
+        while (!pq.isEmpty()) {
+            CharCounter curr = pq.poll();
+            while (curr.count > 0) {
+                result += curr.ch;
+                curr.count--;
             }
         }
         return result;
